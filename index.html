@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bricks breaker games</title>
+</head>
+<body>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
+    <script>
+
+        var smileFaceX = 200;
+        var smileFaceY = 352;
+        var smileFaceSpeed = 2;
+        var smileFaceDirectionX = -1;
+        var smileFaceDirectionY = -1;
+
+        function setup() {
+            createCanvas(400, 400);
+        }
+        function draw() {
+            checkMargins();
+            checkPaddle();
+            clear();
+            background('#ccffcc');
+            smileFace(smileFaceX, smileFaceY, 50);
+            smileFaceX = smileFaceX + (smileFaceSpeed * smileFaceDirectionX) ;
+            smileFaceY = smileFaceY + (smileFaceSpeed * smileFaceDirectionY);
+            paddle(mouseX, 375);
+
+        }
+        function checkMargins(){
+            if(smileFaceX - 25 < 0){
+            smileFaceDirectionX = -1 * smileFaceDirectionX;
+            }
+            if(smileFaceX + 25 > 400){
+                smileFaceDirectionX = -1 * smileFaceDirectionX;
+            }
+            if(smileFaceY - 25 < 0){
+                smileFaceDirectionY = -1 * smileFaceDirectionY;
+            }
+        }
+        function checkPaddle(){
+            if(smileFaceY + 50 > 400 && smileFaceY + 25 < 400){
+                if(smileFaceX + 25 >= mouseX - 50 && smileFaceX - 25 <= mouseX + 50)
+                    smileFaceDirectionY = -1 * smileFaceDirectionY;
+                    smileFaceSpeed = smileFaceSpeed +0.5;
+            }
+        }
+
+        function smileFace(x, y, r){
+            fill('#FFFF00')
+            ellipse(x, y, r);
+
+            if(mouseIsPressed){
+                fill('#FFFFFF')
+            }
+            else{
+                fill('#0000FF');
+            }
+            ellipse(x+r/5.5, y-r/5.5, r/5, r/5);
+            ellipse(x-r/5.5, y-r/5.5, r/5, r/5);;
+            fill('#FF0000');
+            arc(x, y+10, 20, 15, 0, PI);
+            if(mouseIsPressed){
+            arc(x, y+15, 13, 18, 0, PI);
+            }
+        }
+
+        function paddle(x, y){
+            fill('#00FF00');
+            rect(x-50, y, 100, 20);
+        }
+
+    </script>
+</body>
+</html>
